@@ -1,7 +1,5 @@
 package com.aprouxdev.mediumdynamiclifes.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 import com.aprouxdev.mediumdynamiclifes.R;
