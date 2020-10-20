@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 
 import com.aprouxdev.mediumdynamiclifes.utils.Constants;
 
+import java.util.Calendar;
+import java.util.HashMap;
+
 public class DataManager {
     private static DataManager mInstance;
     private Context mContext;
@@ -27,10 +30,27 @@ public class DataManager {
         return mInstance;
     }
 
-    public void saveLifeData(int lifeNumber, long remainingTime) {
+    public void saveLifeData(int lifeNumber, long latestUpdate) {
         mPreferences.edit()
                 .putInt(Constants.PREF_USER_LIFE, lifeNumber)
-                .putLong(Constants.PREF_LIFE_REMAIN_TIME, remainingTime)
+                .putLong(Constants.PREF_LIFE_REMAIN_TIME, latestUpdate)
                 .apply();
+    }
+    public HashMap<String, Object> getLifeData() {
+        HashMap<String, Object> result = new HashMap<>();
+        int lifePosition = mPreferences.getInt(Constants.PREF_USER_LIFE, Constants.LIFE_MAX_NUMBER);
+        long currentTime = Calendar.getInstance().getTimeInMillis();
+        long latestUpdate = mPreferences.getLong(Constants.PREF_LIFE_REMAIN_TIME, currentTime);
+        result.put(Constants.LIFE_POSITION, lifePosition);
+        result.put(Constants.LAST_UPDATE, latestUpdate);
+        return result;
+    }
+
+    public SharedPreferences getPreferences() {
+        return mPreferences;
+    }
+
+    public int getLifeNumber() {
+        return mPreferences.getInt(Constants.PREF_USER_LIFE, Constants.LIFE_MAX_NUMBER);
     }
 }

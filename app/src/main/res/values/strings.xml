@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MediumDynamicLifes</string>
+    <string name="full_life">Full</string>
 </resources>

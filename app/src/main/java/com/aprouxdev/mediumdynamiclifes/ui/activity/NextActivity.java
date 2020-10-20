@@ -1,4 +1,7 @@
 package com.aprouxdev.mediumdynamiclifes.ui.activity;
+/*
+ * Created by antoine on 20.10.20.
+ */
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,12 +18,12 @@ import com.aprouxdev.mediumdynamiclifes.ui.fragment.ToolbarFragment;
 
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity {
+public class NextActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_next);
 
         setupToolbar();
     }
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         DataManager.getInstance().saveLifeData(lifeNumber - 1, currentTime);
     }
 
-    public void goToNextActivityClicked(View view) {
-        startActivity(new Intent(MainActivity.this, NextActivity.class));
+    public void goToMainActivityClicked(View view) {
+        startActivity(new Intent(NextActivity.this, MainActivity.class));
     }
 }
