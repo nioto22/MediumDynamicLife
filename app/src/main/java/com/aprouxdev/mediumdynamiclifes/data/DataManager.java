@@ -30,19 +30,19 @@ public class DataManager {
         return mInstance;
     }
 
-    public void saveLifeData(int lifeNumber, long latestUpdate) {
+    public void saveLifeData(int lifeNumber, long remainTime) {
         mPreferences.edit()
                 .putInt(Constants.PREF_USER_LIFE, lifeNumber)
-                .putLong(Constants.PREF_LIFE_REMAIN_TIME, latestUpdate)
+                .putLong(Constants.PREF_LIFE_REMAIN_TIME, remainTime)
                 .apply();
     }
     public HashMap<String, Object> getLifeData() {
         HashMap<String, Object> result = new HashMap<>();
         int lifePosition = mPreferences.getInt(Constants.PREF_USER_LIFE, Constants.LIFE_MAX_NUMBER);
         long currentTime = Calendar.getInstance().getTimeInMillis();
-        long latestUpdate = mPreferences.getLong(Constants.PREF_LIFE_REMAIN_TIME, currentTime);
+        long remainTime = mPreferences.getLong(Constants.PREF_LIFE_REMAIN_TIME, Constants.TIMES_UP_UNTIL_NEW_LIFE);
         result.put(Constants.LIFE_POSITION, lifePosition);
-        result.put(Constants.LAST_UPDATE, latestUpdate);
+        result.put(Constants.LAST_UPDATE, remainTime);
         return result;
     }
 
@@ -52,5 +52,8 @@ public class DataManager {
 
     public int getLifeNumber() {
         return mPreferences.getInt(Constants.PREF_USER_LIFE, Constants.LIFE_MAX_NUMBER);
+    }
+    public long getRemainingTime() {
+        return mPreferences.getLong(Constants.PREF_LIFE_REMAIN_TIME, Constants.TIMES_UP_UNTIL_NEW_LIFE);
     }
 }

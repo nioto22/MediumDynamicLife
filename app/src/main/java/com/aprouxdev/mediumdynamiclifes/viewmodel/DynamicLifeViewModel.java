@@ -4,7 +4,7 @@ package com.aprouxdev.mediumdynamiclifes.viewmodel;
  */
 
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.os.CountDownTimer;
 
 import androidx.lifecycle.ViewModel;
 
@@ -13,11 +13,16 @@ import com.aprouxdev.mediumdynamiclifes.utils.Constants;
 import com.aprouxdev.mediumdynamiclifes.utils.SharedPreferenceIntegerLiveData;
 
 public class DynamicLifeViewModel extends ViewModel {
-        // STATIC VARS
-        // UI VARS
+    // STATIC VARS
+    // UI VARS
 
-        // DATA VARS
-        private SharedPreferenceIntegerLiveData mLifeNumberLiveData;
+
+    // DATA VARS
+    private SharedPreferenceIntegerLiveData mLifeNumberLiveData;
+    protected long mTimeLeftInMillis;
+    protected Boolean mTimerRunning;
+    protected long mEndTime;
+    protected CountDownTimer mCountDownTimer;
 
 
 
@@ -35,4 +40,16 @@ public class DynamicLifeViewModel extends ViewModel {
         mLifeNumberLiveData = new SharedPreferenceIntegerLiveData(pref, Constants.PREF_USER_LIFE, Constants.LIFE_MAX_NUMBER);
     }
 
+    public void startTimer(long lastUpdate) {
+        // Setup end time : current time + 3 min
+        mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
+
+        if (mCountDownTimer != null) {
+            mCountDownTimer.cancel();
+        }
+    }
+
+    public void saveTimerInfo(){
+
+    }
 }

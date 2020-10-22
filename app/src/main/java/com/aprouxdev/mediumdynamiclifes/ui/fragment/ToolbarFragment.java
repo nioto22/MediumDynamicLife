@@ -1,6 +1,7 @@
 package com.aprouxdev.mediumdynamiclifes.ui.fragment;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class ToolbarFragment extends Fragment {
         // STATIC VARS
@@ -27,6 +32,10 @@ public class ToolbarFragment extends Fragment {
         private TextView lifeTv;
         private ImageView lifeIv;
         private TextView timerTv;
+    protected long mTimeLeftInMillis;
+    protected Boolean mTimerRunning;
+    protected long mEndTime;
+    protected CountDownTimer mCountDownTimer;
         // DATA VARS
     private DynamicLifeViewModel mViewModel;
 
@@ -72,8 +81,8 @@ public class ToolbarFragment extends Fragment {
 
         lifeTv.setText(String.valueOf(lifeNumber));
         if (lifeNumber != 5) {
-            long lastUpdate = (long) lifeDatas.get(Constants.LAST_UPDATE);
-            setLifeTimer(lastUpdate);
+            long remainTime = (long) lifeDatas.get(Constants.REMAIN_TIME);
+            startTimer(remainTime);
         } else {
             timerTv.setText(getString(R.string.full_life));
         }
@@ -86,10 +95,28 @@ public class ToolbarFragment extends Fragment {
         });
     }
 
-    private void setLifeTimer(long lastUpdate) {
 
+    private void startTimer(long remainTime) {
+        // Setup end time : current time + 3 min
+        mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
     }
 
+
+    /**
+     * Return date in specified format.
+     * @param milliSeconds Date in milliseconds
+     * @param dateFormat Date format
+     * @return String representing date in specified format
+     */
+    public static String getDate(long milliSeconds, String dateFormat){
+        // Create a DateFormatter object for displaying date in specified format.
+        SimpleDateFormat formatter = new SimpleDateFormat(dateFormat, Locale.getDefault());
+        formatter.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
+        // Create a calendar object that will convert the date and time value in milliseconds to date.
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(milliSeconds);
+        return formatter.format(calendar.getTime());
+    }
 
 
 }
